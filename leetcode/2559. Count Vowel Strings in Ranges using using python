@@ -1,0 +1,25 @@
+class Solution:
+    def vowelStrings(self, words: List[str], queries: List[List[int]]) -> List[int]:
+        def is_vowel(ch):
+            return ch in {'a', 'e', 'i', 'o', 'u'}
+        n = len(words)
+        prefix_count = [0] * (n + 1)
+        
+        # Precompute prefix sums of words starting and ending with vowels
+        for i, word in enumerate(words):
+            if is_vowel(word[0]) and is_vowel(word[-1]):
+                prefix_count[i + 1] = prefix_count[i] + 1
+            else:
+                prefix_count[i + 1] = prefix_count[i]
+        
+        # Process each query
+        ans = []
+        for li, ri in queries:
+            ans.append(prefix_count[ri + 1] - prefix_count[li])
+        
+        return ans
+        
+
+    
+
+        
