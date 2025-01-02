@@ -1,0 +1,30 @@
+class Solution {
+    public int[] vowelStrings(String[] words, int[][] queries) {
+        int n = words.length;
+        int[] prefix_count = new int[n+1];
+
+        
+        for(int i=0;i < n;i++){
+            String word = words[i];
+            if( (isVowel(word.charAt(0))) && (isVowel(word.charAt(word.length() - 1)))){
+                prefix_count[i+1] = prefix_count[i] + 1 ;
+            }
+            else{
+               prefix_count[i+1] = prefix_count[i]; 
+            }
+        }
+
+        int[] ans = new int[queries.length];
+        for (int i=0 ; i < queries.length ; i++ ){
+
+            int li=queries[i][0],ri = queries[i][1];
+            ans[i] = prefix_count[ri+1] - prefix_count[li];
+        }
+
+        return ans;
+    }
+    private static boolean isVowel(char ch) {
+            return "aeiou".indexOf(ch) != -1 ;
+        }
+
+}
